@@ -1,0 +1,113 @@
+---
+swagger: '2.0'
+info:
+  title: Documentação API
+  version: v1
+host: localhost:5000
+schemes:
+- http
+basePath: "/"
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /users:
+    get:
+      operationId: "user-list"
+      description: 'Lista todos os usuários'
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserList"
+    post:
+      operationId: "user-create"
+      description: 'Cria um novo usuário'
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserCreate"
+      responses:
+        200:
+          description: "Usuário {user.name} criado!"
+        400:
+          description: "erro na requisição"
+    tags:
+      - user
+
+  /users/{id}:
+    get:
+      operationId: "user-detail"
+      description: "Detalha um usuário"
+      parameters:
+        - name: id
+          in: path
+          description: id do usuário
+          required: true
+          type: string
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/UserList"
+    put:
+      operationId: "user-update"
+      description: 'Atualiza um usuário'
+      parameters:
+        - name: id
+          in: path
+          description: id do usuário
+          required: true
+          type: string
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserCreate"
+      responses:
+        200:
+          description: "Usuário {user.name} atualizado."
+        404:
+          description: "Usuário não encontrado"
+    delete:
+      operationId: "user-delete"
+      description: 'Deleta um usuário'
+      parameters:
+        - name: id
+          in: path
+          description: id do usuário
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Usuário {user.name} foi deletado."
+        404:
+          description: "Usuário não encontrado"
+    tags:
+      - user
+
+definitions:
+  UserList:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      document:
+        type: "string"
+      address:
+        type: "string"
+
+  UserCreate:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      document:
+        type: "string"
+      address:
+        type: "string"

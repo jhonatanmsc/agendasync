@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+    web:
+        build: .
+        env_file: 
+        - ./.env
+        ports:
+        - "5000:5000"
+        volumes:
+        - .:/opt
+        links:
+        - mongo
+    mongo:
+        image: mongo
+        env_file: 
+            - ./.env
+        ports:
+            - "27017:27017"
+        volumes:
+        - mongo-data:/data/db
+        - mongo-configdb:/data/configdb
+volumes:
+    mongo-data:
+    mongo-configdb:
