@@ -1,4 +1,4 @@
-# frotacard
+# agendasync
 
 para rodar vc precisará de docker e docker-compose
 
